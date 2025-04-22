@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
-const ADDRESS_ENDPOINT = "http://localhost:5000/api/addess"
+const ADDRESS_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/addess`
 
 export const addressApi = createApi({
     reducerPath : "addressApi",

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
-const ORDER_ENDPOINT = "http://localhost:5000/api/cart"
+const ORDER_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/cart`
 
 export const cartApi = createApi({
     reducerPath : "cart",
