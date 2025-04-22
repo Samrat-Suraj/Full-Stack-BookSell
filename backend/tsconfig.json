@@ -1,25 +1,13 @@
-
-// {
-//     "compilerOptions": {
-//         "module": "CommonJS",
-//         "target": "ES6",
-//         "outDir": "./dest",
-//         "rootDir": "./",
-//         "strict": true,
-//         "esModuleInterop": true
-//     }
-// }
-
-
 {
     "compilerOptions": {
-      "outDir": "./dist",
-      "rootDir": "./src",
-      "module": "commonjs",
-      "target": "es2019",
-      "esModuleInterop": true,
-      "strict": true
-    },
-    "include": ["src"]
-  }
+        "module": "CommonJS",
+        "target": "ES6",
+        "outDir": "./dest",
+        "rootDir": "./",
+        "strict": true,
+        "esModuleInterop": true
+    }
+}
+
+
   
