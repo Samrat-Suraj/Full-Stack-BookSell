@@ -1,13 +1,27 @@
+// {
+//     "compilerOptions": {
+//         "module": "CommonJS",
+//         "target": "ES6",
+//         "outDir": "./dist",
+//         "rootDir": "./src",
+//         "strict": true,
+//         "esModuleInterop": true
+//     }
+// }
+
+
+
 {
     "compilerOptions": {
         "module": "CommonJS",
         "target": "ES6",
-        "outDir": "dist",
-        "rootDir": "./src",
+        "outDir": "./dist",     // Output directory for compiled code
+        "rootDir": "./dest",     // Source directory for your TypeScript files
         "strict": true,
         "esModuleInterop": true
     }
 }
+
 
 
   
