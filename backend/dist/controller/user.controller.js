@@ -126,7 +126,9 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(400).json({ success: false, message: "Please Verify Your Email Adresss" });
         }
         (0, GenCookieAndSetCookie_1.default)(user._id, res);
-        return res.status(200).json({ success: true, message: "User Login Successfully", user: Object.assign(Object.assign({}, user.toObject()), { password: undefined }) });
+        return res.status(200).json({
+            success: true, message: "User Login Successfully", user: Object.assign(Object.assign({}, user.toObject()), { password: undefined })
+        });
     }
     catch (error) {
         console.log("Error In Login Controller", error.message);
@@ -136,7 +138,11 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.login = login;
 const LogOut = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.clearCookie("books");
+        res.clearCookie("books", {
+            httpOnly: true,
+            secure: true, // set to true if you're using HTTPS
+            sameSite: "none", // required for cross-site cookie clearance
+        });
         return res.status(200).json({ success: true, message: "LogOut User Successfully" });
     }
     catch (error) {
@@ -210,7 +216,9 @@ const loaderUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
-        return res.status(200).json({ success: true, user: Object.assign(Object.assign({}, user.toObject()), { password: undefined }) });
+        return res.status(200).json({
+            success: true, user: Object.assign(Object.assign({}, user.toObject()), { password: undefined })
+        });
     }
     catch (error) {
         console.error("Error in loaderUser controller:", error.message);
@@ -234,7 +242,9 @@ const updateUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, functi
         user.email = email || user.email;
         user.phoneNumber = phoneNumber || user.phoneNumber;
         yield user.save();
-        return res.status(200).json({ success: true, message: "User Profile Updated Successfully", user: Object.assign(Object.assign({}, user.toObject()), { pasword: undefined, verificationToken: undefined, resetPasswordToken: undefined, resetPasswordExpairs: undefined }) });
+        return res.status(200).json({
+            success: true, message: "User Profile Updated Successfully", user: Object.assign(Object.assign({}, user.toObject()), { pasword: undefined, verificationToken: undefined, resetPasswordToken: undefined, resetPasswordExpairs: undefined })
+        });
     }
     catch (error) {
         console.log("Error In updateUserProfile Controller", error.message);

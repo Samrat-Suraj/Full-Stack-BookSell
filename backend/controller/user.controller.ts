@@ -10,7 +10,7 @@ import { sendPasswordResetEmail, sendVerificationToEmail } from "../config/MailC
 
 
 // Auth Part
-export const register = async (req: Request, res: Response) : Promise<any> => {
+export const register = async (req: Request, res: Response): Promise<any> => {
     try {
         const { name, email, password, agreeTerms } = req.body
         if (!name || !email || !password || !agreeTerms) {
@@ -20,7 +20,7 @@ export const register = async (req: Request, res: Response) : Promise<any> => {
             return res.status(400).json({ success: false, message: "You Must Agree To Terms And Conditions" })
         }
 
-        if(password.length < 6){
+        if (password.length < 6) {
             return res.status(400).json({ success: false, message: "Password Must Have atlest 6 or Chracters" })
         }
 
@@ -51,11 +51,11 @@ export const register = async (req: Request, res: Response) : Promise<any> => {
             email,
             password: hassedPassword,
             verificationToken,
-            agreeTerms : true
+            agreeTerms: true
         })
 
         await newUser.save()
-        const result  = await sendVerificationToEmail(newUser.email , verificationToken)
+        const result = await sendVerificationToEmail(newUser.email, verificationToken)
         console.log(result)
         res.status(201).json({
             success: true, message: "User Created Successfully, PLease Check Mail To Verify Account ", user: {
@@ -102,14 +102,14 @@ export const verifyEmail = async (req: Request, res: Response): Promise<any> => 
         return res.status(500).json({ success: false, message: "Internal server error." });
     }
 };
-export const login = async (req : Request , res : Response) : Promise<any> => {
+export const login = async (req: Request, res: Response): Promise<any> => {
     try {
         const { email, password } = req.body
         if (!email || !password) {
             return res.status(400).json({ success: false, message: "All Fields Are Required" })
         }
 
-        if(password.length < 6){
+        if (password.length < 6) {
             return res.status(400).json({ success: false, message: "Password Must Have atlest 6 or Chracters" })
         }
 
@@ -126,34 +126,40 @@ export const login = async (req : Request , res : Response) : Promise<any> => {
         if (!user?.password) {
             return res.status(400).json({ success: false, message: "Password is missing for the user." });
         }
-        
+
         const isPasswordCorrent = await bcryptjs.compare(password, user.password);
-        if(!isPasswordCorrent){
+        if (!isPasswordCorrent) {
             return res.status(400).json({ success: false, message: "Incorrect Password" })
         }
 
         // Check User Verifyed Or Not
         const isUserVerfifyed = user.isVerified === true
-        if(!isUserVerfifyed){
+        if (!isUserVerfifyed) {
             return res.status(400).json({ success: false, message: "Please Verify Your Email Adresss" })
         }
 
-        GenCookieAndSetCookie(user._id as string , res)
-        return res.status(200).json({success : true , message : "User Login Successfully" , user : {
-            ...user.toObject(),
-            password : undefined
-        }})
-        
-    } catch (error : any) {
+        GenCookieAndSetCookie(user._id as string, res)
+        return res.status(200).json({
+            success: true, message: "User Login Successfully", user: {
+                ...user.toObject(),
+                password: undefined
+            }
+        })
+
+    } catch (error: any) {
         console.log("Error In Login Controller", error.message)
         return res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
-export const LogOut = async (req : Request , res : Response) : Promise<any> => {
+export const LogOut = async (req: Request, res: Response): Promise<any> => {
     try {
-        res.clearCookie("books")
-        return res.status(200).json({success : true , message : "LogOut User Successfully"})
-    } catch (error : any) {
+        res.clearCookie("books", {
+            httpOnly: true,
+            secure: true, // set to true if you're using HTTPS
+            sameSite: "none", // required for cross-site cookie clearance
+        });
+        return res.status(200).json({ success: true, message: "LogOut User Successfully" })
+    } catch (error: any) {
         console.log("Error In LogOut Controller", error.message)
         return res.status(500).json({ success: false, message: "Internal Server Error" })
     }
@@ -161,7 +167,7 @@ export const LogOut = async (req : Request , res : Response) : Promise<any> => {
 export const forGetPassword = async (req: Request, res: Response): Promise<any> => {
     try {
         const { email } = req.body;
-        if(!email){
+        if (!email) {
             return res.status(404).json({ success: false, message: "Email Is Required For Forget" });
         }
         const user = await User.findOne({ email });
@@ -188,7 +194,7 @@ export const ResetPassword = async (req: Request, res: Response): Promise<any> =
         console.log(token)
 
         if (!newPassword) {
-            return res.status(400).json({ success : false , message: "New password is required." });
+            return res.status(400).json({ success: false, message: "New password is required." });
         }
 
         if (!token) {
@@ -205,7 +211,7 @@ export const ResetPassword = async (req: Request, res: Response): Promise<any> =
         }
 
         const salt = await bcryptjs.genSalt(10)
-        const hassedPassword = await bcryptjs.hash(newPassword , salt)
+        const hassedPassword = await bcryptjs.hash(newPassword, salt)
 
         user.password = hassedPassword;
         user.resetPasswordToken = undefined;
@@ -226,14 +232,16 @@ export const loaderUser = async (req: Request, res: Response): Promise<any> => {
     try {
         const userId = req.user
         const user = await User.findById(userId)
-        if(!user){
-            return res.status(404).json({success : false , message : "User not found"})
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" })
         }
 
-        return res.status(200).json({success : true , user : {
-            ...user.toObject(),
-            password: undefined,
-        }})
+        return res.status(200).json({
+            success: true, user: {
+                ...user.toObject(),
+                password: undefined,
+            }
+        })
     } catch (error: any) {
         console.error("Error in loaderUser controller:", error.message);
         return res.status(500).json({ success: false, message: "Internal server error." });
@@ -243,16 +251,16 @@ export const loaderUser = async (req: Request, res: Response): Promise<any> => {
 
 // Profile Part
 
-export const updateUserProfile = async (req : Request , res : Response) : Promise<any> => {
+export const updateUserProfile = async (req: Request, res: Response): Promise<any> => {
     try {
         const userId = req.user
-        const {name , email , phoneNumber} = req.body
+        const { name, email, phoneNumber } = req.body
 
         if (!userId) {
             return res.status(401).json({ success: false, message: "Unauthorized access" });
         }
 
-        const user = await User.findById(userId).populate({path : "address"})
+        const user = await User.findById(userId).populate({ path: "address" })
         if (!user) {
             return res.status(401).json({ success: false, message: "User Not Found" });
         }
@@ -260,16 +268,18 @@ export const updateUserProfile = async (req : Request , res : Response) : Promis
         user.name = name || user.name
         user.email = email || user.email
         user.phoneNumber = phoneNumber || user.phoneNumber
-        await user.save() 
-        return res.status(200).json({success : true , message : "User Profile Updated Successfully" , user : {
-            ...user.toObject(),
-            pasword : undefined,
-            verificationToken : undefined,
-            resetPasswordToken : undefined,
-            resetPasswordExpairs : undefined,
-        }})
+        await user.save()
+        return res.status(200).json({
+            success: true, message: "User Profile Updated Successfully", user: {
+                ...user.toObject(),
+                pasword: undefined,
+                verificationToken: undefined,
+                resetPasswordToken: undefined,
+                resetPasswordExpairs: undefined,
+            }
+        })
 
-    } catch (error : any) {
+    } catch (error: any) {
         console.log("Error In updateUserProfile Controller", error.message)
         return res.status(500).json({ success: false, message: "Internal Server Error" })
     }
