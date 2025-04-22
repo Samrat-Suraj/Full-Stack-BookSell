@@ -15,8 +15,8 @@
     "compilerOptions": {
         "module": "CommonJS",
         "target": "ES6",
-        "outDir": "./dist",     // Output directory for compiled code
-        "rootDir": "./dest",     // Source directory for your TypeScript files
+        "outDir": "./dist",
+        "rootDir": "./",
         "strict": true,
         "esModuleInterop": true
     }
