@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const PRODUCT_ENDPOINT = "http://localhost:5000/api/product"
+
+const PRODUCT_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/product`
 
 export const productApi = createApi({
     reducerPath : "product",

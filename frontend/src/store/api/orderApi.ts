@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const ORDER_ENDPOINT = "http://localhost:5000/api/order"
+const ORDER_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/order`
 
 export const orderApi = createApi({
     reducerPath : "order",
