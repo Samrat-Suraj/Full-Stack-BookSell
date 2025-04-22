@@ -51,7 +51,7 @@ const Hero = () => {
 
     return (
         <div className='w-full'>
-            <div className=' h-screen relative'>
+            <div className=' h-[600px] relative'>
                 {
                     bannerImages?.map((book, index) => {
                         return (

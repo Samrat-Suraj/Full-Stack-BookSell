@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const WISHLIST_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/wishlist`
+const WISHLIST_ENDPOINT = "http://localhost:5000/api/wishlist"
 
 export const wishlistApi = createApi({
     reducerPath : "whishlist",
