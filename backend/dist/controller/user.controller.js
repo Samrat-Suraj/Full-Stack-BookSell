@@ -136,7 +136,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.login = login;
 const LogOut = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.clearCookie("books", { maxAge: 0 });
+        res.clearCookie("books");
         return res.status(200).json({ success: true, message: "LogOut User Successfully" });
     }
     catch (error) {

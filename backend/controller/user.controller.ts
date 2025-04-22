@@ -151,7 +151,7 @@ export const login = async (req : Request , res : Response) : Promise<any> => {
 }
 export const LogOut = async (req : Request , res : Response) : Promise<any> => {
     try {
-        res.clearCookie("books", {maxAge: 0})
+        res.clearCookie("books")
         return res.status(200).json({success : true , message : "LogOut User Successfully"})
     } catch (error : any) {
         console.log("Error In LogOut Controller", error.message)
