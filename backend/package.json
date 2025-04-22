@@ -4,7 +4,8 @@
   "main": "server.ts",
   "scripts": {
     "dev": "nodemon server.ts",
-    "start": "node dist/server.ts"
+    "start": "node dist/server.js",
+    "build" : "tsc"
   },
   "keywords": [],
   "author": "",
