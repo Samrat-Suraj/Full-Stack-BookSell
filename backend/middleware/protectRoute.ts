@@ -7,12 +7,12 @@ import User from "../model/user.model";
 declare global {
     namespace Express {
         interface Request {
-            user?: any;
+            user?: User;
         }
     }
 }
 
-export const protectRoute = async (req: Request , res: Response, next: NextFunction) : Promise<any> => {
+export const protectRoute = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
         const token = req.cookies["books"];
         if (!token) {

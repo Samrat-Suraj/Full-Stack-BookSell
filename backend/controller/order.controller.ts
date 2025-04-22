@@ -16,7 +16,7 @@ const razorpay = new Razorpay({
 
 export const createOrUpdateOrder = async (req: Request, res: Response): Promise<any> => {
     try {
-        const userId = req.user._id as string;
+        const userId = req.user;
         const { orderId, shippingAddress, paymentMethod, totalAmount, paymentDetails } = req.body;
         const cart = await Cart.findOne({ user: userId }).populate("items.productId");
 

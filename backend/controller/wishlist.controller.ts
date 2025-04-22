@@ -15,7 +15,7 @@ export const AddToWishListAndRemove = async (req: Request, res: Response): Promi
         let wishlist = await Wishlist.findOne({ user: userId });
         if (!wishlist) {
             wishlist = new Wishlist({
-                user: userId?._id,
+                user: userId as string,
                 products: [],
             });
         }

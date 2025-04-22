@@ -15,11 +15,11 @@ passport.use(new GoogleStrategy({
         const { emails, photos, displayName } = profile;
 
         try {
-            let user = await User.findOne({ email: emails?.[0].value });
+            let user = await User?.findOne({ email: emails?.[0].value });
 
             if (user) {
-                if (!user.profilePicture && photos?.[0].value) {
-                    user.profilePicture = photos[0].value;
+                if (!user.profilePicture && photos?.[0]?.value) {
+                    user.profilePicture = photos[0]?.value;
                     await user.save();
                 }
                 return cb(null, user);
@@ -27,12 +27,12 @@ passport.use(new GoogleStrategy({
 
             // If user doesn't exist, create a new one
             const newUser = new User({
-                googleId: profile.id,
+                googleId: profile?.id,
                 name: displayName,
                 isVerified: true,
                 agreeTerms: true,
-                profilePicture: photos?.[0].value,
-                email: emails?.[0].value,
+                profilePicture: photos?.[0]?.value,
+                email: emails?.[0]?.value,
             });
 
             await newUser.save();

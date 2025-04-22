@@ -12,14 +12,14 @@ export const AddToCart = async (req: Request, res: Response): Promise<any> => {
             return res.status(400).json({ success: false, message: "Product Not Found" });
         }
 
-        if (userId._id.toString() === product.seller._id.toString()) {
+        if (userId && userId.toString() === product.seller._id.toString()) {
             return res.status(400).json({ success: false, message: "You cant't add to cart your own product" });
         }
 
         let cart = await Cart.findOne({ user: userId })
         if (!cart) {
             cart = new Cart({
-                user: userId?._id,
+                user: userId,
                 items: []
             })
         }
