@@ -310,8 +310,8 @@ const LoginDialog = () => {
                                         </div>
                                         {signUpError.confirmPassword && <div className="text-red-600 p-1 font-semibold">{signUpError.confirmPassword}</div>}
                                         <div className="flex items-center gap-2 mt-1">
-                                            <input name="agreeTerms" onChange={onChangeSignUpData} type="checkbox" className="accent-blue-600" />
-                                            <p className="text-xs text-gray-500">I agree to the Terms and Conditions</p>
+{/*                                             <input name="agreeTerms" onChange={onChangeSignUpData} type="checkbox" className="accent-blue-600" />
+                                            <p className="text-xs text-gray-500">I agree to the Terms and Conditions</p> */}
                                         </div>
                                         {/* {signUpError.agreeTerms && <div className="text-red-600 p-1 font-semibold">{signUpError.agreeTerms}</div>} */}
                                         <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md text-xs">
