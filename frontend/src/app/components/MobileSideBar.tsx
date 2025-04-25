@@ -27,12 +27,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import LoginDialog from "./LoginDialog";
 import { useLoaderUserQuery, useLogoutMutation } from "@/store/api/userApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/store/slice/authSlice";
 import { toast } from "sonner";
 
 const MobileSideBar = () => {
     const { data , refetch} = useLoaderUserQuery({})
+    const {user} = useSelector((store: any) => store.auth)
     const dispatch = useDispatch()
     const [logout , {data : logoutData , isSuccess}] = useLogoutMutation()
     
@@ -108,7 +109,7 @@ useEffect(() => {
 
         useEffect(() => {
         if (isSuccess) {
-            dispatch(setUser(null))
+            dispatch(setUser({}))
             toast.success("Logout Successfully")
             refetch()
             setIsOpen(false)
@@ -124,15 +125,15 @@ useEffect(() => {
                 <SheetHeader>
                     <SheetTitle>
                         {
-                            data?.user ?
+                            user ?
                                 <div className="flex items-center space-x-3 p-4 border-b">
                                     <Avatar>
-                                        <AvatarImage src={data?.user?.profilePicture} className="w-10 h-10 rounded-full" />
+                                        <AvatarImage src={user?.profilePicture} className="w-10 h-10 rounded-full" />
                                         <AvatarFallback>CN</AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col">
-                                        <span className="font-semibold text-gray-900">{data?.user?.name}</span>
-                                        <span className="text-sm text-gray-500">{data?.user?.email}</span>
+                                        <span className="font-semibold text-gray-900">{user?.name}</span>
+                                        <span className="text-sm text-gray-500">{user?.email}</span>
                                     </div>
                                 </div>
                                 : <></>
