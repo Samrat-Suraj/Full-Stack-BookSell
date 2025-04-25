@@ -53,13 +53,31 @@ const Header = () => {
     }
 
     
-    useEffect(() => {
-        const allowedPaths = ["/", "/books" , "/checkout/cart" , "/reset-password" , "/help" , "/terms-of-use" , "/privacy-policy" , "/about-us"];
-        if (!user && !allowedPaths.includes(pathname)) {
-            dispatch(setErrorMessage(true));
-            router.push("/");
-        }
-    }, [user, pathname]);
+useEffect(() => {
+    const allowedPaths = [
+        "/", 
+        "/books", 
+        "/checkout/cart", 
+        "/help", 
+        "/terms-of-use", 
+        "/privacy-policy", 
+        "/about-us"
+    ];
+
+   
+    const dynamicAllowedPatterns = [
+        /^\/reset-password\/[^\/]+$/ 
+    ];
+
+    const isAllowedPath = allowedPaths.includes(pathname) || 
+        dynamicAllowedPatterns.some((pattern) => pattern.test(pathname));
+
+    if (!user && !isAllowedPath) {
+        dispatch(setErrorMessage(true));
+        router.push("/");
+    }
+}, [user, pathname]);
+
     
     
 
