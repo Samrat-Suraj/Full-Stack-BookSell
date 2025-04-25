@@ -113,7 +113,7 @@ useEffect(() => {
             refetch()
             setIsOpen(false)
         }
-    }, [isSuccess , data])
+    }, [isSuccess , data , refetch, dispatch])
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
