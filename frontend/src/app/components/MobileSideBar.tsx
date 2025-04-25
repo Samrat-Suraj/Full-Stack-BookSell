@@ -108,7 +108,7 @@ useEffect(() => {
 
         useEffect(() => {
         if (isSuccess) {
-            dispatch(setUser({user : null}))
+            dispatch(setUser(null))
             toast.success("Logout Successfully")
             refetch()
             setIsOpen(false)
