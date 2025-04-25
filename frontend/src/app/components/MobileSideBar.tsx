@@ -26,10 +26,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import LoginDialog from "./LoginDialog";
-import { useLoaderUserQuery } from "@/store/api/userApi";
+import { useLoaderUserQuery, useLogoutMutation } from "@/store/api/userApi";
 
 const MobileSideBar = () => {
     const { data } = useLoaderUserQuery({})
+    const [logout , {data : logoutData}] = useLogoutMutation()
     const [text, setText] = useState<string>("")
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
@@ -48,54 +49,56 @@ const MobileSideBar = () => {
         { icon: <LogOut className="w-5 h-5 text-gray-700" />, text: "LogOut" },
     ];
 
-    useEffect(() => {
-        if (text === "About Us") {
-            router.push("/about-us")
-            setIsOpen(false);
+useEffect(() => {
+    const handleNavigation = async () => {
+        switch (text) {
+            case "About Us":
+                router.push("/about-us");
+                break;
+            case "Privacy Policy":
+                router.push("/privacy-policy");
+                break;
+            case "Terms & Use":
+                router.push("/terms-of-use");
+                break;
+            case "All Books":
+                router.push("/books");
+                break;
+            case "Sell Book":
+                router.push("/book-sell");
+                break;
+            case "My Profile":
+                router.push("/account/profile");
+                break;
+            case "Cart":
+                router.push("/checkout/cart");
+                break;
+            case "Wishlist":
+                router.push("/account/wishlist");
+                break;
+            case "My Selling Orders":
+                router.push("/account/selling-products");
+                break;
+            case "My Orders":
+                router.push("/account/orders");
+                break;
+            case "Help":
+                router.push("/help");
+                break;
+            case "LogOut":
+                await logout({});
+                localStorage.removeItem("token");
+                router.push("/login"); 
+                break;
+            default:
+                break;
         }
-        if (text === "Privacy Policy") {
-            router.push("/privacy-policy")
-            setIsOpen(false);
-        }
-        if (text === "Terms & Use") {
-            router.push("/terms-of-use")
-            setIsOpen(false);
-        }
-        if (text === "All Books") {
-            router.push("/books")
-            setIsOpen(false);
-        }
-        if (text === "Sell Book") {
-            router.push("/book-sell")
-            setIsOpen(false);
-        }
+        setIsOpen(false);
+    };
 
-        if (text === "My Profile") {
-            router.push("/account/profile")
-            setIsOpen(false)
-        }
-        if (text === "Cart") {
-            router.push("/checkout/cart")
-            setIsOpen(false)
-        }
-        if (text === "Wishlist") {
-            router.push("/account/wishlist")
-            setIsOpen(false)
-        }
-        if (text === "My Selling Orders") {
-            router.push("/account/selling-products")
-            setIsOpen(false)
-        }
-        if (text === "My Orders") {
-            router.push("/account/orders")
-            setIsOpen(false)
-        }
-        if (text === "Help") {
-            router.push("/help")
-            setIsOpen(false)
-        }
+    if (text) handleNavigation();
 
-    }, [text, router])
+}, [text, router, logout]);
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
