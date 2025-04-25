@@ -32,7 +32,7 @@ import { setUser } from "@/store/slice/authSlice";
 import { toast } from "sonner";
 
 const MobileSideBar = () => {
-    const { data } = useLoaderUserQuery({})
+    const { data , refetch} = useLoaderUserQuery({})
     const dispatch = useDispatch()
     const [logout , {data : logoutData , isSuccess}] = useLogoutMutation()
     
@@ -110,9 +110,10 @@ useEffect(() => {
         if (isSuccess) {
             dispatch(setUser({user : null}))
             toast.success("Logout Successfully")
+            refetch()
             setIsOpen(false)
         }
-    }, [isSuccess])
+    }, [isSuccess , data])
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
