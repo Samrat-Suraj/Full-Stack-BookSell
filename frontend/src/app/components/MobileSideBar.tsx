@@ -126,7 +126,7 @@ useEffect(() => {
                             data?.user ?
                                 <div className="flex items-center space-x-3 p-4 border-b">
                                     <Avatar>
-                                        <AvatarImage src="https://github.com/shadcn.png" className="w-10 h-10 rounded-full" />
+                                        <AvatarImage src={data?.user?.profilePicture} className="w-10 h-10 rounded-full" />
                                         <AvatarFallback>CN</AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col">
