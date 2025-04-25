@@ -88,7 +88,7 @@ useEffect(() => {
             case "LogOut":
                 await logout({});
                 localStorage.removeItem("token");
-                router.push("/login"); 
+                router.push("/"); 
                 break;
             default:
                 break;
