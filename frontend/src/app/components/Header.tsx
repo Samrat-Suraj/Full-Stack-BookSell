@@ -54,7 +54,7 @@ const Header = () => {
 
     
     useEffect(() => {
-        const allowedPaths = ["/", "/books" , "/checkout/cart"];
+        const allowedPaths = ["/", "/books" , "/checkout/cart" , "/reset-password" , "/help" , "/terms-of-use" , "/privacy-policy" , "/about-us"];
         if (!user && !allowedPaths.includes(pathname)) {
             dispatch(setErrorMessage(true));
             router.push("/");
