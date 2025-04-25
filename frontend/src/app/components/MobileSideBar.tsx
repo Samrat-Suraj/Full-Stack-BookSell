@@ -27,10 +27,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import LoginDialog from "./LoginDialog";
 import { useLoaderUserQuery, useLogoutMutation } from "@/store/api/userApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/slice/authSlice";
+import { toast } from "sonner";
 
 const MobileSideBar = () => {
     const { data } = useLoaderUserQuery({})
-    const [logout , {data : logoutData}] = useLogoutMutation()
+    const dispatch = useDispatch()
+    const [logout , {data : logoutData , isSuccess}] = useLogoutMutation()
+    
     const [text, setText] = useState<string>("")
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
@@ -99,6 +104,15 @@ useEffect(() => {
     if (text) handleNavigation();
 
 }, [text, router, logout]);
+
+
+        useEffect(() => {
+        if (isSuccess) {
+            dispatch(setUser({}))
+            toast.success("Logout Successfully")
+            setIsOpen(false)
+        }
+    }, [isSuccess])
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
