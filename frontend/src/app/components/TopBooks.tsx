@@ -50,13 +50,13 @@ const TopBooks = () => {
                 {
                     randomBooks.map((item: any, index: number) => (
                         <div key={item?._id} onClick={() => onClickHander(item?._id)} className="p-2">
-                            <Image
-                                src={item?.images[0]}
-                                className="object-fill rounded-sm w-full h-72"
-                                alt="book"
-                                height={100}
-                                width={100}
-                            />
+<Image
+  src={item.images[0]}
+  alt="book"
+  width={794} // A4 width in pixels at 96 DPI
+  height={1123} // A4 height in pixels at 96 DPI
+  className="object-cover rounded-sm"
+/>
                             <div className="p-2 space-y-3">
                                 <h1 className="text-sm font-semibold text-gray-800 truncate">
                                     {item?.title}
