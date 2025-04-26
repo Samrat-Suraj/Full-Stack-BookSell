@@ -71,13 +71,13 @@ const NewArrivals = () => {
                 {chunk.map((item: any, index: number) => (
                   
                     <div key={index} onClick={() => onClickHander(item?._id)} className="relative shadow-md p-2">
-                      <Image
-                        src={item.images[0]}
-                        className="object-fill rounded-sm w-full h-72"
-                        alt="book"
-                        height={100}
-                        width={100}
-                      />
+<Image
+  src={item.images[0]}
+  alt="book"
+  width={794}
+  height={1123} 
+  className="object-cover rounded-sm"
+/>
                       <div className="p-2 space-y-3">
                         <h1 className="text-sm font-semibold text-gray-800 truncate">
                           {item?.title}
