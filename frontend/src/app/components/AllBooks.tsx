@@ -69,10 +69,10 @@ const AllBooks = () => {
                     <div onClick={() => SellBookNavigateHander(book?._id)} key={index} className="relative bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
                         <Image
                             src={book.images[0]}
-                            className="object-fill rounded-sm w-full h-72"
                             alt="book"
-                            height={100}
-                            width={100}
+                            width={794} // A4 width in pixels at 96 DPI
+                            height={1123} // A4 height in pixels at 96 DPI
+                            className="object-cover rounded-sm"
                         />
                         <div className="p-4 space-y-3">
                             <h2 className="text-lg font-semibold text-gray-800 truncate">{book?.title}</h2>
